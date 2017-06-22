@@ -6,5 +6,6 @@ setup(name='random_pass_generator',
       author = 'Loic Reisdoerfer',
       author_email = 'reisdoerferloic@protonmail.com',
       packages = ['random_pass_gen'],
-      zip_safe = False
+      zip_safe = False,
+      install_requires=['tqdm']
       )
