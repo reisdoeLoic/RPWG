@@ -14,8 +14,12 @@ from tqdm import tqdm #progress bar
 #check python version
 if sys.version_info<(3,0,0):
     sys.stderr.write("Get Python 3 you idiot : https://www.python.org/downloads/ \n")
-def argumentValidator(arguments) :
-    #todo : propose a min length and a maxlength ? max words ? 
+#def argumentValidator(arguments) :
+    #todo : propose a min length and a maxlength ? max words ?
+    #minlength = arguments default
+    #maxlenght for pw = 72 chars
+    #maxlength for pp ? gotta work this out with the size of the words in the eff files
+
 
 """
 Random Password generator that generates passwords of a min length of 8.
@@ -50,7 +54,7 @@ Generates a passphrase from an EFF wordfile : https://www.eff.org/fr/deeplinks/2
 """
 
 # loctes the wordfile -- maybe should add a selection of wordfiles (eff-short for example, maybe different languages ?)
-def locateFile():
+#def locateFile():
     #todo
 
 #generate the worldfile from the provided txt
@@ -72,10 +76,9 @@ def chooseWords(wordfile,numWords):
 
 
 #generate a passphrase based on the number of words in it
-def passphraseGenerator(numWords,wordfile):
+def passphraseGenerator(numWords,wordfile,separator):
     password = None
-    seperator = " " #words separated by a space #todo : implement other seperators ?
-    password = seperator.join(chooseWords(wordfile,numWords))
+    password = separator.join(chooseWords(wordfile,numWords))
     return password
 
 
@@ -85,6 +88,7 @@ def passphraseGenerator(numWords,wordfile):
 def generatePassphrases(arguments):
     numWords = arguments.words
     numPass = arguments.number
+    separator = arguments.separator
     passphrases = set()
     if numPass == 1 : #if only one passphrase we print it
         passphrase= passphraseGenerator(numWords,wordfile)
@@ -113,7 +117,8 @@ class Argparser(argparse.ArgumentParser) :
         self.addArgs()
         #creation of the arguments
     def addArgs(self):
-        #todo : add argument for a different seperator
+        #todo : add argument for a different separator
+        #self.add_argument('-sp','--separator',dest='separator',type= str,default=" ",help = "Choose the separator between words in a passphrase.\n")
         self.add_argument('-pw','--password',dest='action',action='store_const',const=generatePasswords, help = "Generate a password with 16 characters")
         self.add_argument('-pp','--passphrase',dest='action',action='store_const',const=generatePassphrases,help = 'Generate a passphrase with 4 words')
         self.add_argument("-w","--words", dest = "words", type = int, default = 4,   help = "Generate a passphrase with WORDS words")
